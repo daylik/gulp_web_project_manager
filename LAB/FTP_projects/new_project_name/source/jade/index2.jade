@@ -1,0 +1,42 @@
+doctype html
+p. html(dir="ltr" lang="ru-RU" prefix="og: http://ogp.me/ns#")
+	head
+		meta(charset="UTF-8")
+		meta(name="viewport" content="width=device-width, initial-scalse=1")
+
+		title 
+			-wp_head()
+
+		script(type="text/javascript", src="./js/compiled_pack.js")
+
+		link(rel="stylesheet", href="./css/plugins_compiled_pack.css")
+		link(rel="stylesheet", href="./css/style_compiled.css")
+
+	body
+		#page.title
+			a.skip-link.screen-reader-text(href="#content")
+		header#musthead.site-header(role="banner")
+			.container
+				.row
+					.col-md-4
+						a#logo(href="/") Max-pro.ru
+					.col-md-4
+						nav#site-navigation.main-navigation(role="navigation")
+							button.manu-toggle
+					.col-md-4
+						.tel +7 (812) 123-45-67<br> +7 (812) 123-45-67 
+			ul
+				-foreach ($this->list as $list):
+					li!= $list
+				-else:
+					li!= 'пусто';
+				-endforeach
+
+
+
+
+
+
+
+
+

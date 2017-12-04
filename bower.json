@@ -1,0 +1,26 @@
+{
+  "name": "blank",
+  "description": "",
+  "main": "index.html",
+  "authors": [
+    "Олег М."
+  ],
+  "license": "ISC",
+  "homepage": "",
+  "private": true,
+  "dependencies": {
+    "jquery": "^3.2.1",
+    "jquery-mobile": "^1.4.5",
+    "owl.carousel": "^2.2.1",
+    "photoswipe": "^4.1.2",
+    "magnific-popup": "^1.1.0",
+    "bootstrap": "^3.3.7",
+    "html5shiv": "^3.7.3",
+    "respond": "^1.4.2",
+    "font-awesome": "^4.7.0",
+    "angular": "^1.6.4"
+  },
+  "devDependencies": {
+    "susy": "^2.2.12"
+  }
+}

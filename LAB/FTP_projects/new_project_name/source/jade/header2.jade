@@ -1,0 +1,54 @@
+doctype html
+include ./../jade_inc/mixing.jade
+<html dir="ltr" lang="ru-RU" prefix="og: http://ogp.me/ns#">
+head
+  meta(charset='UTF-8')
+  meta(name='viewport', content='width=device-width, initial-scale=1')
+  title
+    +php('wp_title();')
+    +echo('wp_title();')
+    +print_r('wp_title()')
+    +var_dump('wp_title()')
+  link(rel='profile', href='http://gmpg.org/xfn/11')
+
+  //-old browsers 
+  <!--[if lt IE 9]>
+  +scripts(v_scripts)
+  <![endif]-->
+
+  //-javascripts
+  +script_file("./js/compiled_pack.js")
+
+  //-css
+  +css(v_css)
+  //или
+  +css_file('./css/plugins_compiled_pack.css')
+  +css_file('./css/style_compiled.css')
+
+  //-wordpress scripts
+  +php('wp_head();')
+<body <?php body_class(); ?>>
+#page.site
+  a.skip-link.screen-reader-text(href='#content')
+  header#masthead.site-header(role='banner')
+    
+    .container
+      .row
+        .col-md-4
+          a#logo(href='/') Site_name.ru
+        .col-md-4
+          nav#site-navigation.main-navigation(role='navigation')
+            button.menu-toggle(aria-controls='primary-menu', aria-expanded='false')
+            +php(nav_menu)
+          // #site-navigation
+        .col-md-4
+          .tel
+            | +7 (812) 123-45-67
+            br
+            | +7 (921) 123-45-67
+          span.zvonok Заказать звонок
+    .site-branding
+    // .site-branding
+  // #masthead
+  #content.site-content
+    .container

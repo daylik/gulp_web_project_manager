@@ -1,0 +1,34 @@
+doctype html
+
+- // Переменные
+- var menu_arr = ['Главная', 'Не главная', 'Контакты'];
+
+- //mixings
+mixin menu(items)
+	ul
+		each item in items
+			li: a(href="#") #{item}
+
+- //HTML
+html(lang="ru")
+	head
+		meta(charset="UTF-8")
+		title BLANK project
+		script(type="text/javascript", src="./js/compiled_pack.js")
+		link(rel="stylesheet", href="./css/plugins_compiled_pack.css")
+		link(rel="stylesheet", href="./css/style_compiled.css")
+	body
+		main#page
+			header#header
+				a.logo(href="/") Logo name
+				nav#main_menu
+					+menu(menu_arr)
+			section#content
+				aside#sidebar
+					ul
+						li 1
+						li 2
+			section#pre-footer
+			footer#footer
+				nav#footer_menu
+					+menu(menu_arr)

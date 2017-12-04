@@ -1,0 +1,25 @@
+
+@import "./../../../../../includes/mixins.scss"; 
+
+$color_1: #fff;
+$color_2: #c3a366;
+$color_txt: #000;
+$main_color: #000;
+$bg_color_1: #fff;
+$bg_color_2: #e9e9e9;
+
+@import url('https://fonts.googleapis.com/css?family=Roboto:100,100i,300,300i,400,400i,700,700i&subset=cyrillic,cyrillic-ext');
+
+html body{
+	font-family: 'Roboto', sans-serif;
+	font-size: 16px;
+	font-weight: 100;
+	line-height: 30px;
+	color: $color_txt;
+	color: $color_2;
+}
+
+@include cols_gutter(12, 0.2);
+@include cols_gutter(24, 0.2);
+@include cols_gutter(2, 0.2);
+//@include cols(12);

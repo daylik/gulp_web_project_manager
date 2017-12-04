@@ -1,0 +1,100 @@
+@mixin inline_block(){
+	display: -moz-inline-box; 
+	display:inline-block; 
+	zoom:1; 
+	*display:inline; 
+	vertical-align: top;
+}
+
+@mixin prefix($param, $px){
+	-webkit-#{$param}: $px;
+		 -moz-#{$param}: $px;
+		  -ms-#{$param}: $px;
+	     -o-#{$param}: $px;
+			    #{$param}: $px;
+}
+
+@mixin cols($num){
+	/* rows x#{$num} */ 
+	.row-x#{$num}{
+		@include inline_block();
+		font-size:0; line-height:0;
+		//@include border_radius(20px);
+		@include prefix(border-radius, 30px);
+
+		&::before,
+		&::after{
+		-webkit-box-sizing: content-box;
+		   -moz-box-sizing: content-box;
+			    box-sizing: content-box;
+			}
+
+		@for $i from 1 through $num{
+			.col-#{$i} {width: 100% / $i; *width: 100% / $i - 0.1; }
+		}
+	}
+}
+
+@mixin cols_gutter($num, $gutter){
+	/* rows x#{$num} */
+	$w_one: 100% / $num;
+	.row-x#{$num}g{
+		font-size:0;
+		line-height:0;
+		margin-left: 0% - $gutter;
+		margin-right: 0% - $gutter;
+		width: 100% + ($gutter * 2);
+
+		$m_bottom_gutter: $gutter + 0.5em;
+
+		.col{
+			@include inline_block();
+			margin-left: $gutter + 0%;
+			margin-right: $gutter + 0%;
+			margin-bottom: $m_bottom_gutter;
+
+			font-size: $font_size;
+			line-height: $font_size + 2;
+
+			&::before, 
+			&::after{ 
+				box-sizing: content-box; 
+			}
+		}
+
+		
+
+		@for $i from 1 through $num {
+			.col-#{$i} {
+				width: $w_one * $i - ($gutter * 2);
+				*width: $w_one * $i - 0.1 - ($gutter * 2);
+			}
+		}
+		@media screen and (max-width: 768px){
+			@for $i from 1 through $num {
+				.col-#{$i} {
+					width: $w_one * $num - ($gutter * 2);
+					*width: $w_one * $num  - 0.1 - ($gutter * 2);
+				}
+			}
+		}
+		@media screen and (max-width: 992px){
+			@for $i from 1 through $num {
+				.col-sm-#{$i} {
+					width: $w_one * $i - ($gutter * 2);
+					*width: $w_one * $i - 0.1 - ($gutter * 2);
+				}
+			}
+		}
+		@media screen and (max-width: 768px){
+			@for $i from 1 through $num {
+				.col-xs-#{$i} {
+					width: $w_one * $i - ($gutter * 2);
+					*width: $w_one * $i - 0.1 - ($gutter * 2);
+				}
+			}
+		}
+	}
+	
+	
+}

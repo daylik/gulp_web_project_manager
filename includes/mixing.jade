@@ -1,0 +1,24 @@
+include ./variables.jade
+
+mixin scripts(items)
+  each item in items
+    script(src!="<?php echo get_template_directory_uri() .'#{item}'; ?>", type='text/javascript', charset='utf-8')
+
+mixin script_file(item)
+  script(src!="<?php echo get_template_directory_uri() .'#{item}'; ?>", type='text/javascript', charset='utf-8')
+
+mixin css(items)
+  each item in items
+    link(rel="stylesheet", href!="<?php echo get_template_directory_uri() .'#{item}'; ?>")
+
+mixin css_file(item)
+    link(rel="stylesheet", href!="<?php echo get_template_directory_uri() .'#{item}'; ?>")
+
+mixin php(code, echo)
+    <?php !{code} ?>
+mixin echo(code)
+    <?php echo !{code} ?>
+mixin var_dump(code)
+    <?php var_dump(!{code}) ?>
+mixin print_r(code)
+    <?php echo '<pre>'; print_r( !{code} ); echo '</pre>'; ?>
