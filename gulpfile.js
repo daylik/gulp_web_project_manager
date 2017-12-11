@@ -264,7 +264,7 @@ gulp.task('remote_css', function(done) {
         //.pipe(remember('remote_css'))
         .pipe(rename({ extname: ".min.css" }))
         .pipe(gulp.dest( PUBLIC_css_path ));
-        
+
     //=== LESS
     gulp.src( SOURCE_css_path + '/*.less')
         .pipe(less(autoprefixer( V_autoprefix_params )))
@@ -344,29 +344,36 @@ gulp.task('backup', function() {
 
 //=== BILD for new BLANK
 gulp.task('bild', function(done) {
+    
+    var Latest_path = 'BILDS/LATEST_BLANK_BILD';
+
     gulp.task('clean_bild', function() {
-        return del('BILDS/LATEST_BLANK_BILD'); 
+        return del(Latest_path); 
     });
 
     //gulp.src(['LAB/LOCAL_projects/app/**/*.{js,scss,sass,jade,jpg,png,gif,svg}'])
     //    .pipe(gulp.dest('BILDS/LATEST_BLANK_BILD/app'));
 
-    gulp.src(['LAB/FTP_projects/new_project_name/**/*'])
-        .pipe(gulp.dest('BILDS/LATEST_BLANK_BILD/LAB/FTP_projects/new_project_name'));
+    gulp.src(['LAB/FTP_plugins/new_plugin_name/**/*'])
+        .pipe(gulp.dest(Latest_path + '/LAB/FTP_plugins/new_plugin_name'));
+
+        gulp.src(['LAB/FTP_projects/new_project_name/**/*'])
+        .pipe(gulp.dest(Latest_path + '/LAB/FTP_projects/new_project_name'));
+
     gulp.src(['LAB/LOCAL_projects/new_project_name/**/*'])
-        .pipe(gulp.dest('BILDS/LATEST_BLANK_BILD/LAB/LOCAL_projects/new_project_name'));
+        .pipe(gulp.dest(Latest_path + '/LAB/LOCAL_projects/new_project_name'));
 
     gulp.src(['includes/**/*'])
-        .pipe(gulp.dest('BILDS/LATEST_BLANK_BILD/includes'));
+        .pipe(gulp.dest(Latest_path + '/includes'));
 
     gulp.src(['bower.json', 'gulpfile.js', 'package.json', 'BLANK_gulp_config.js'])
-        .pipe(gulp.dest('BILDS/LATEST_BLANK_BILD'));
+        .pipe(gulp.dest(Latest_path));
 
     gulp.src(['BLANK_gulp_config.js'])
         .pipe(rename('gulp_config.js'))
-        .pipe(gulp.dest('BILDS/LATEST_BLANK_BILD'));
+        .pipe(gulp.dest(Latest_path));
 
-    gulp.src(['*.bat']).pipe(gulp.dest('BILDS/LATEST_BLANK_BILD'));
+    gulp.src(['*.bat']).pipe(gulp.dest(Latest_path));
     // all folder to zip
     gulp.src(['BILDS/LATEST_BLANK_BILD/*', '!BILDS/LATEST_BLANK_BILD/*.zip'])
         .pipe(zip('latest_bild_BLANK_GULP.zip'))
@@ -441,18 +448,19 @@ gulp.task('site', [
 
 //==== gulp site_plugin --name site_name
 gulp.task('site_plugin', ['remote_plugins_css', 'task_browserSyncProxy'], function() {
+    var LOCAL_plugin_path_watch = LAB_FTP_folder + SITES[site_name].local_folder_plugins;
 
-    //gulp.watch( LAB_FTP_folder + SITES[site_name].local_folder_plugins + '/**/*.jade', ['jade_php']);
-    gulp.watch( LAB_FTP_folder + SITES[site_name].local_folder_plugins + '/**/*.s*ss', ['remote_plugins_css']); //.on('unlink', function(filepath){ //remember.forget('remote_css', node_path.resolve(filepath));
+    //gulp.watch( LOCAL_plugin_path_watch + '/**/*.jade', ['jade_php']);
+    gulp.watch( LOCAL_plugin_path_watch + '/**/*.s*ss', ['remote_plugins_css']); //.on('unlink', function(filepath){ //remember.forget('remote_css', node_path.resolve(filepath));
         //    delete chached.cashes.remote_css[ node_path.resolve(filepath)]; });
-    gulp.watch( LAB_FTP_folder + SITES[site_name].local_folder_plugins + '/**/*.**', ['ftp_plugins_send_all']);
-    gulp.watch( LAB_FTP_folder + SITES[site_name].local_folder_plugins + '/**/*.{css,scss,sass,js,php}', ['browser_reload']);
+    gulp.watch( LOCAL_plugin_path_watch + '/**/*.**', ['ftp_plugins_send_all']);
+    gulp.watch( LOCAL_plugin_path_watch + '/**/*.{css,scss,sass,js,php}', ['browser_reload']);
     //.on('change', browserSync_proxy.reload);
 
-    //gulp.watch( LAB_FTP_folder + SITES[site_name].local_folder_plugins + '/**', ['imagemin']);
+    //gulp.watch( LOCAL_plugin_path_watch + '/**', ['imagemin']);
         //.on('change', browserSync_proxy.reload);
         //.on('change', function() { console.log('img changed!'); });
-    //gulp.watch( LAB_FTP_folder + SITES[site_name].local_folder_plugins  + '/**', ['ftp_send_img']);
+    //gulp.watch( LOCAL_plugin_path_watch  + '/**', ['ftp_send_img']);
 });
 
 
