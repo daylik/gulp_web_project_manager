@@ -69,6 +69,7 @@ var V_autoprefix_params = { browsers: v.autoprefix_browsers_v2, cascade: false }
 
 var LAB_local_folder = 'LAB/LOCAL_projects/';
 var LAB_FTP_folder   = 'LAB/FTP_projects/';
+var LAB_FTP_plugins  = 'LAB/FTP_plugins/';
 
 var local_project    = args.name || 'app';
 var site_name        = args.name || 'max_pro';
@@ -226,7 +227,11 @@ gulp.task('remote_css', function(done) {
         //autoprefixer()
         //, cssnano()
     ];
-    gulp.src( LAB_FTP_folder + SITES[site_name].local_folder_css + '/*.{sass,scss}')
+
+    var SOURCE_css_path = LAB_FTP_folder + SITES[site_name].local_folder_css;
+    var PUBLIC_css_path = LAB_FTP_folder + SITES[site_name].theme_folder_css;
+
+    gulp.src( SOURCE_css_path + '/*.{sass,scss}')
         //.pipe(sourcemaps.init())
         //.pipe( newer(SITES[site_name].local_folder_css ))
         .pipe(cached('remote_css'))
@@ -246,11 +251,11 @@ gulp.task('remote_css', function(done) {
         //.pipe(replace(/(\})/g, '\n}'))
         .pipe(sourcemaps.write('.'))
         .pipe(rename({ extname: ".css" }))
-        .pipe(gulp.dest( LAB_FTP_folder + SITES[site_name].theme_folder_css ))
+        .pipe(gulp.dest( PUBLIC_css_path ))
         ;//.pipe(browserSync_proxy.reload({ stream: true }));
 
     //=== min.css
-    gulp.src( LAB_FTP_folder + SITES[site_name].local_folder_css + '/*.{sass,scss}')
+    gulp.src( SOURCE_css_path + '/*.{sass,scss}')
         .pipe(sass({
           outputStyle: 'compressed'
         }).on('error', sass.logError))
@@ -258,13 +263,66 @@ gulp.task('remote_css', function(done) {
         //.pipe(postcss( processors ))
         //.pipe(remember('remote_css'))
         .pipe(rename({ extname: ".min.css" }))
-        .pipe(gulp.dest( LAB_FTP_folder + SITES[site_name].theme_folder_css ));
+        .pipe(gulp.dest( PUBLIC_css_path ));
+        
     //=== LESS
-    gulp.src( LAB_FTP_folder + SITES[site_name].local_folder_css + '/*.less')
+    gulp.src( SOURCE_css_path + '/*.less')
         .pipe(less(autoprefixer( V_autoprefix_params )))
         //.pipe(postcss( processors ))
         //.pipe(rename( 'style.css' ))
-        .pipe(gulp.dest( LAB_FTP_folder + SITES[site_name].theme_folder_css )); //.pipe(browserSync_proxy.reload({ stream: true }));
+        .pipe(gulp.dest( PUBLIC_css_path )); //.pipe(browserSync_proxy.reload({ stream: true }));
+    done();
+});
+
+gulp.task('remote_plugins_css', function(done) {
+    var processors = [
+        autoprefixer( V_autoprefix_params ),
+        //postcss_sass(),
+        //autoprefixer()
+        //, cssnano()
+    ];
+    var LOCAL_plugin_path = LAB_FTP_plugins + SITES[site_name].local_folder_plugins;
+
+    gulp.src( LOCAL_plugin_path + '/source/*.{sass,scss}')
+        //.pipe(sourcemaps.init())
+        //.pipe( newer(SITES[site_name].local_folder_css ))
+        .pipe(cached('remote_css'))
+        .pipe(sass({
+            outputStyle: 'compact', //nested | compresed | compact
+            //includePaths: ['node_modules/susy/sass']
+        }).on('error', sass.logError))
+        .pipe(autoprefixer( V_autoprefix_params ))
+        //.pipe(postcss( processors ))
+        //.pipe(cssFormat({ indent: 1, hasSpace: true }))
+         //.pipe(replace(/[;]/g, '; '))
+        //.pipe(replace(/(\;[\s]+\})/g, '; }'))
+        
+        .pipe(replace(/\}[\n]{1}/g, '}'))
+        .pipe(replace(/(\,\s\.)/g, ',\n.'))
+        .pipe(replace(/(\,\s\#)/g, ',\n#'))
+        //.pipe(replace(/(\})/g, '\n}'))
+        .pipe(sourcemaps.write('.'))
+        .pipe(rename({ extname: ".css" }))
+        .pipe(gulp.dest( LOCAL_plugin_path +'/public' ))
+        ;//.pipe(browserSync_proxy.reload({ stream: true }));
+
+    //=== min.css
+    gulp.src( LOCAL_plugin_path + '/source/*.{sass,scss}')
+        .pipe(sass({
+          outputStyle: 'compressed'
+        }).on('error', sass.logError))
+        .pipe(autoprefixer( V_autoprefix_params ))
+        //.pipe(postcss( processors ))
+        //.pipe(remember('remote_css'))
+        .pipe(rename({ extname: ".min.css" }))
+        .pipe(gulp.dest( LOCAL_plugin_path +'/public' ));
+
+    //=== LESS
+    gulp.src( LOCAL_plugin_path + '/source/*.less')
+        .pipe(less(autoprefixer( V_autoprefix_params )))
+        //.pipe(postcss( processors ))
+        //.pipe(rename( 'style.css' ))
+        .pipe(gulp.dest( LOCAL_plugin_path +'/public')); //.pipe(browserSync_proxy.reload({ stream: true }));
     done();
 });
 

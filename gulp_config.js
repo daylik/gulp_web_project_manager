@@ -38,7 +38,7 @@ module.exports = {
         //,
         //site_name : { ... }
         plugin_name: {
-            local_folder_plugins: '',
+            local_folder_plugins: 'plugin_name',
             ftp_plugins_path: '/www/wp-content/plugins/plugin_name',
             ftp: {
                 host: '______',
