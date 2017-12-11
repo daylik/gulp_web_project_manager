@@ -37,5 +37,18 @@ module.exports = {
         }
         //,
         //site_name : { ... }
+        plugin_name: {
+            local_folder_plugins: '',
+            ftp_plugins_path: '/www/wp-content/plugins/plugin_name',
+            ftp: {
+                host: '______',
+                port: 21,
+                user: '______',
+                pass: '______',
+                parallel: 3,
+                log: 'ftp.log',
+                maxConnections: 5
+            },
+        }
 }
 };
