@@ -381,7 +381,7 @@ gulp.task('bild', function(done) {
     done();
 });
 
-//=== CMD: gulp
+//=== CMD: gulp --name %sitename%
 gulp.task('default', [
     'vendor', 
     'vendor_css', 
